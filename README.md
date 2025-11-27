@@ -15,7 +15,7 @@
 
 - ФИО: `Девичева Маирия Станиславовна`
 - Группа: `УИБО-02-23`
-- Контакт: `devicheva.mary@mail.ru`
+- Контакт: `devicheva.mary@mail.ru | @Marisde`
 
 ---
 

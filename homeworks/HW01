@@ -1,1 +1,692 @@
-
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Задание 1"
+      ],
+      "metadata": {
+        "id": "Vz4YSBuXv6hT"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "* Импорт бибилиотеки NumPy с общепринятым сокращением (import numpy as np)"
+      ],
+      "metadata": {
+        "id": "QLq_PL0ewF-4"
+      }
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 4,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "MHqSLQeLvuok",
+        "outputId": "35e401c5-8f88-462b-9ca4-5c3684baba77"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "NumPy версия: 2.0.2\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Импорт бибилиотеки NumPy с общепринятым сокращением np\n",
+        "import numpy as np\n",
+        "\n",
+        "# Проверка версии импортированной библиотеки\n",
+        "print(f\"NumPy версия: {np.__version__}\")"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Задание 2"
+      ],
+      "metadata": {
+        "id": "frS7SUtpxzDf"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "* Создание (примеры) массивов"
+      ],
+      "metadata": {
+        "id": "pcKWya8zx2oL"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Создание массива из списка\n",
+        "\n",
+        "# Пример 1\n",
+        "list_1 = [0, 2, 3, 4, 5]\n",
+        "\n",
+        "arr_1 = np.array(list_1)\n",
+        "print(arr_1)\n",
+        "\n",
+        "# Пример 2\n",
+        "list_2 = list(range(20))\n",
+        "\n",
+        "arr_2 = np.array(list_2)\n",
+        "print(arr_2)\n",
+        "\n",
+        "# Пример 3\n",
+        "list_3 = [x**2 for x in range(8)]\n",
+        "\n",
+        "arr_3 = np.array(list_3)\n",
+        "print(arr_3)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "1Yh2-syoy0Q3",
+        "outputId": "afebd14a-5e0e-494f-d674-c1e330bfc89d"
+      },
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[0 2 3 4 5]\n",
+            "[ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19]\n",
+            "[ 0  1  4  9 16 25 36 49]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Создание одномерного массива\n",
+        "arr_1 = np.array([1, 2, 3, 6, 0, 4])\n",
+        "print('Одномерный массив:\\n')\n",
+        "print(arr_1)\n",
+        "print()\n",
+        "\n",
+        "# Создание двумерного массива\n",
+        "arr_2 = np.array([[0, 2, 3], [4, 34, 6], [7, 6, 9]])\n",
+        "print('Двумерный массив:\\n')\n",
+        "print(arr_2)\n",
+        "print()\n",
+        "\n",
+        "# Создание многомерно массива\n",
+        "arr_3 = np.array([\n",
+        "    [[1, 2, 3], [4, 5, 6], [7, 8, 9]],\n",
+        "    [[10, 11, 12], [13, 14, 15], [16, 17, 18]],\n",
+        "    [[19, 20, 21], [22, 23, 24], [25, 26, 27]]\n",
+        "])\n",
+        "print('Многомерный массив:\\n')\n",
+        "print(arr_3)\n",
+        "print()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "REguZbUzx7L2",
+        "outputId": "574ddaa3-ff07-4973-bc75-d7453391d8cd"
+      },
+      "execution_count": 52,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Одномерный массив:\n",
+            "\n",
+            "[1 2 3 6 0 4]\n",
+            "\n",
+            "Двумерный массив:\n",
+            "\n",
+            "[[ 0  2  3]\n",
+            " [ 4 34  6]\n",
+            " [ 7  6  9]]\n",
+            "\n",
+            "Многомерный массив:\n",
+            "\n",
+            "[[[ 1  2  3]\n",
+            "  [ 4  5  6]\n",
+            "  [ 7  8  9]]\n",
+            "\n",
+            " [[10 11 12]\n",
+            "  [13 14 15]\n",
+            "  [16 17 18]]\n",
+            "\n",
+            " [[19 20 21]\n",
+            "  [22 23 24]\n",
+            "  [25 26 27]]]\n",
+            "\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "* Функция **np.zeros()** в библиотеке NumPy создаёт новый массив, заполненный нулями.\n",
+        "\n",
+        "* Функция **np.ones()** создаёт массив заданной формы и типа, заполненный единицами.\n",
+        "\n",
+        "* Функция **np.arange()** создаёт массив с равномерно расположенными значениями внутри заданного интервала."
+      ],
+      "metadata": {
+        "id": "p9_LcwMO3x2C"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Создание массива с помощью функции np.zeros()\n",
+        "zeros_arr_1 = np.zeros(6)\n",
+        "print(zeros_arr_1)\n",
+        "print()\n",
+        "\n",
+        "zeros_arr_2 = np.zeros((5, 3)) # Массив 5x3\n",
+        "print(zeros_arr_2)\n",
+        "print()\n",
+        "\n",
+        "# Создание массива с помощью функции np.ones()\n",
+        "ones_arr_1 = np.ones(6)\n",
+        "print(ones_arr_1)\n",
+        "print()\n",
+        "\n",
+        "ones_arr_2 = np.ones((2, 3)) # Массив 2x3\n",
+        "print(ones_arr_2)\n",
+        "print()\n",
+        "\n",
+        "# Создание массива с помощью функции np.arange()\n",
+        "arange_arr = np.arange(1, 10, 2)\n",
+        "print(arange_arr)\n",
+        "print()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "RIU___EDyi0A",
+        "outputId": "b6abb21d-de20-49a7-a155-1655fc345f93"
+      },
+      "execution_count": 29,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[0. 0. 0. 0. 0. 0.]\n",
+            "\n",
+            "[[0. 0. 0.]\n",
+            " [0. 0. 0.]\n",
+            " [0. 0. 0.]\n",
+            " [0. 0. 0.]\n",
+            " [0. 0. 0.]]\n",
+            "\n",
+            "[1. 1. 1. 1. 1. 1.]\n",
+            "\n",
+            "[[1. 1. 1.]\n",
+            " [1. 1. 1.]]\n",
+            "\n",
+            "[1 3 5 7 9]\n",
+            "\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Задание 3"
+      ],
+      "metadata": {
+        "id": "jPZF40uc6xYC"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## Демонстрация атрибутов\n",
+        "\n",
+        "\n",
+        "*   Вывод формы **shape**\n",
+        "*   Вывод типа данных **dtype**\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n"
+      ],
+      "metadata": {
+        "id": "3QlffgFj611v"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "arr = np.array([[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11]]) # Массив\n",
+        "print('Массив:\\n', arr)\n",
+        "print(\"\\nФорма:\", np.shape(arr))\n",
+        "print(\"\\nТип данных:\", arr.dtype)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Lrg3Klbs61dd",
+        "outputId": "4d8ddd23-44e8-4f70-8ded-26e036856a5c"
+      },
+      "execution_count": 53,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Массив:\n",
+            " [[ 0  1  2  3]\n",
+            " [ 4  5  6  7]\n",
+            " [ 8  9 10 11]]\n",
+            "\n",
+            "Форма: (3, 4)\n",
+            "\n",
+            "Тип данных: int64\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Задание 4"
+      ],
+      "metadata": {
+        "id": "XdEL2yZJ83qV"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "* Индексирование и срезы"
+      ],
+      "metadata": {
+        "id": "AisWczEE86vK"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Индексирование\n",
+        "arr = np.array([[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11]])\n",
+        "print('Массив:\\n', arr)\n",
+        "\n",
+        "print(\"\\n1. Получение отдельного элемента:\")\n",
+        "element = arr[1, 2]  # Строка 2, столбец 3 (но индексирование строк и столбцов с 0)\n",
+        "print(f\"arr[1, 2] = {element}\")\n",
+        "\n",
+        "print(\"\\n2. Получение целой строки:\")\n",
+        "row_1 = arr[1]       # Строка 2 (индекс 1)\n",
+        "print(f\"arr[1] = {row_1}\")\n",
+        "\n",
+        "print(\"\\n3. Получение целого столбца:\")\n",
+        "col_2 = arr[:, 2]    # Столбец 3 (индекс 2)\n",
+        "print(f\"arr[:, 2] = {col_2}\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "J7dD2Kc79COD",
+        "outputId": "f7174285-54a4-4d8d-cf34-c410a8282505"
+      },
+      "execution_count": 46,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Массив:\n",
+            " [[ 0  1  2  3]\n",
+            " [ 4  5  6  7]\n",
+            " [ 8  9 10 11]]\n",
+            "\n",
+            "1. Получение отдельного элемента:\n",
+            "arr[1, 2] = 6\n",
+            "\n",
+            "2. Получение целой строки:\n",
+            "arr[1] = [4 5 6 7]\n",
+            "\n",
+            "3. Получение целого столбца:\n",
+            "arr[:, 2] = [ 2  6 10]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Срезы\n",
+        "arr = np.array([[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11]])\n",
+        "print('Массив:\\n', arr)\n",
+        "\n",
+        "print(\"\\n1. Срез строк:\")\n",
+        "rows_slice = arr[0:2]  # Строки с 0 по 1 (2 не включается)\n",
+        "print(f\"arr[0:2] = \\n{rows_slice}\")  # [[0 1 2 3], [4 5 6 7]]\n",
+        "\n",
+        "print(\"\\n2. Срез столбцов:\")\n",
+        "cols_slice = arr[:, 1:3]  # Все строки, столбцы с 1 по 2\n",
+        "print(f\"arr[:, 1:3] = \\n{cols_slice}\")  # [[1 2], [5 6], [9 10]]\n",
+        "\n",
+        "print(\"\\n3. Срез и строк и столбцов:\")\n",
+        "sub_array = arr[1:3, 0:2]  # Строки 1-2, столбцы 0-1\n",
+        "print(f\"arr[1:3, 0:2] = \\n{sub_array}\")  # [[4 5], [8 9]]\n",
+        "\n",
+        "print(\"\\n4. Срез с шагом:\")\n",
+        "step_slice = arr[::2, ::2]  # Каждая вторая строка, каждый второй столбец\n",
+        "print(f\"arr[::2, ::2] = \\n{step_slice}\")  # [[0 2], [8 10]]"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "X0WOhpXeAwiE",
+        "outputId": "15cde6df-a369-4b2e-a982-d06e6fb88887"
+      },
+      "execution_count": 48,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Массив:\n",
+            " [[ 0  1  2  3]\n",
+            " [ 4  5  6  7]\n",
+            " [ 8  9 10 11]]\n",
+            "\n",
+            "1. Срез строк:\n",
+            "arr[0:2] = \n",
+            "[[0 1 2 3]\n",
+            " [4 5 6 7]]\n",
+            "\n",
+            "2. Срез столбцов:\n",
+            "arr[:, 1:3] = \n",
+            "[[ 1  2]\n",
+            " [ 5  6]\n",
+            " [ 9 10]]\n",
+            "\n",
+            "3. Срез и строк и столбцов:\n",
+            "arr[1:3, 0:2] = \n",
+            "[[4 5]\n",
+            " [8 9]]\n",
+            "\n",
+            "4. Срез с шагом:\n",
+            "arr[::2, ::2] = \n",
+            "[[ 0  2]\n",
+            " [ 8 10]]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Извлечение подмассивов\n",
+        "arr = np.array([[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11]])\n",
+        "print('Массив:\\n', arr)\n",
+        "\n",
+        "print(\"\\n1. Подмассив 2x2 из центра:\")\n",
+        "center_sub = arr[0:2, 1:3]  # Строки 0-1, столбцы 1-2\n",
+        "print(f\"arr[0:2, 1:3] = \\n{center_sub}\")  # [[1 2], [5 6]]\n",
+        "\n",
+        "print(\"\\n2. Последние два столбца:\")\n",
+        "last_cols = arr[:, -2:]  # Все строки, последние 2 столбца\n",
+        "print(f\"arr[:, -2:] = \\n{last_cols}\")  # [[2 3], [6 7], [10 11]]\n",
+        "\n",
+        "print(\"\\n3. Первая и последняя строки:\")\n",
+        "first_last = arr[::2]  # С шагом 2: строка 0 и 2\n",
+        "print(f\"arr[::2] = \\n{first_last}\")  # [[0 1 2 3], [8 9 10 11]]"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "DE23LP1-BO50",
+        "outputId": "5ddb033c-9b83-483f-def0-3ed177c953b7"
+      },
+      "execution_count": 49,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Массив:\n",
+            " [[ 0  1  2  3]\n",
+            " [ 4  5  6  7]\n",
+            " [ 8  9 10 11]]\n",
+            "\n",
+            "1. Подмассив 2x2 из центра:\n",
+            "arr[0:2, 1:3] = \n",
+            "[[1 2]\n",
+            " [5 6]]\n",
+            "\n",
+            "2. Последние два столбца:\n",
+            "arr[:, -2:] = \n",
+            "[[ 2  3]\n",
+            " [ 6  7]\n",
+            " [10 11]]\n",
+            "\n",
+            "3. Первая и последняя строки:\n",
+            "arr[::2] = \n",
+            "[[ 0  1  2  3]\n",
+            " [ 8  9 10 11]]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Задание 5\n"
+      ],
+      "metadata": {
+        "id": "Nme6KZqPBsDj"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## Векторные операции и базовая статистика\n",
+        "\n",
+        "\n",
+        "*   поэлементное сложение или умножение массивов\n",
+        "*   вычисление средней величины **mean** или другой простой статистики\n",
+        "\n"
+      ],
+      "metadata": {
+        "id": "KgTn7nmBByD7"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Поэлементные операции\n",
+        "\n",
+        "arr_1 = np.array([1, 2, 3, 4, 5])\n",
+        "arr_2 = np.array([10, 20, 30, 40, 50])\n",
+        "\n",
+        "addition = arr_1 + arr_2\n",
+        "print(\"1. Поэлементное сложение массиов:\")\n",
+        "print(f\"Результат: {addition}\")\n",
+        "\n",
+        "# 2. Поэлементное умножение\n",
+        "multiplication = arr_1 * arr_2\n",
+        "print(\"\\n2. Поэлементное умножение массивов:\")\n",
+        "print(f\"Результат: {multiplication}\")\n",
+        "\n",
+        "# 3. Поэлементное вычитание\n",
+        "subtraction = arr_2 - arr_1\n",
+        "print(\"\\n3. Поэлементное вычитание массиов:\")\n",
+        "print(f\"Результат: {subtraction}\")\n",
+        "\n",
+        "# 4. Поэлементное деление\n",
+        "division = arr_2 / arr_1\n",
+        "print(\"\\n4. Поэлементное деление массиов:\")\n",
+        "print(f\"Результат: {division}\")\n",
+        "\n",
+        "# 5. Поэлементное возведение в степень\n",
+        "power = arr_1 ** 2\n",
+        "print(\"\\n5. Поэлементное возведение в степень массиов:\")\n",
+        "print(f\"Результат: {power}\")\n",
+        "\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "LzQ7tcFgCILS",
+        "outputId": "d89594ae-fd42-4fc1-edce-56677e927dad"
+      },
+      "execution_count": 55,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "1. Поэлементное сложение массиов:\n",
+            "Результат: [11 22 33 44 55]\n",
+            "\n",
+            "2. Поэлементное умножение массивов:\n",
+            "Результат: [ 10  40  90 160 250]\n",
+            "\n",
+            "3. Поэлементное вычитание массиов:\n",
+            "Результат: [ 9 18 27 36 45]\n",
+            "\n",
+            "4. Поэлементное деление массиов:\n",
+            "Результат: [10. 10. 10. 10. 10.]\n",
+            "\n",
+            "5. Поэлементное возведение в степень массиов:\n",
+            "Результат: [ 1  4  9 16 25]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Статистика\n",
+        "\n",
+        "arr = np.array([12, 15, 8, 20, 5, 18, 10, 25, 3, 22])\n",
+        "\n",
+        "print(f\"Массив:\\n {arr}\\n\")\n",
+        "\n",
+        "# 1. Среднее значение (mean)\n",
+        "mean_value = np.mean(arr)\n",
+        "print(\"1. Среднее значение (np.mean):\")\n",
+        "print(f\"Результат: {mean_value:.2f}\")\n",
+        "\n",
+        "# 2. Медиана (median)\n",
+        "median_value = np.median(arr)\n",
+        "print(\"\\n2. Медиана (np.median):\")\n",
+        "print(f\"Результат: {median_value}\")\n",
+        "\n",
+        "# 3. Стандартное отклонение (std)\n",
+        "std_value = np.std(arr)\n",
+        "print(\"\\n3. Стандартное отклонение (np.std):\")\n",
+        "print(f\"Результат: {std_value:.2f}\")\n",
+        "\n",
+        "# 4. Дисперсия (variance)\n",
+        "var_value = np.var(arr)\n",
+        "print(\"\\n4. Дисперсия (np.var):\")\n",
+        "print(f\"Результат: {var_value:.2f}\")\n",
+        "\n",
+        "# 5. Минимальное и максимальное значения\n",
+        "min_value = np.min(arr)\n",
+        "max_value = np.max(arr)\n",
+        "print(\"\\n5. Минимальное и максимальное значения:\")\n",
+        "print(f\"Минимум: {min_value}\")\n",
+        "print(f\"Максимум: {max_value}\")\n",
+        "print(f\"Диапазон: {max_value - min_value}\\n\")\n",
+        "\n",
+        "# 6. Сумма всех элементов\n",
+        "sum_value = np.sum(arr)\n",
+        "print(\"\\n6. Сумма всех элементов (np.sum):\")\n",
+        "print(f\"Результат: {sum_value}\")\n",
+        "\n",
+        "\n",
+        "# 7. Процентили\n",
+        "percentile_25 = np.percentile(arr, 25)\n",
+        "percentile_75 = np.percentile(arr, 75)\n",
+        "print(\"\\n7. Процентили:\")\n",
+        "print(f\"25-й процентиль (Q1): {percentile_25}\")\n",
+        "print(f\"75-й процентиль (Q3): {percentile_75}\\n\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "bedQ-kuOKgNN",
+        "outputId": "a78c05bd-1e8d-4e48-81aa-5524a00f4420"
+      },
+      "execution_count": 57,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Массив:\n",
+            " [12 15  8 20  5 18 10 25  3 22]\n",
+            "\n",
+            "1. Среднее значение (np.mean):\n",
+            "Результат: 13.80\n",
+            "\n",
+            "2. Медиана (np.median):\n",
+            "Результат: 13.5\n",
+            "\n",
+            "3. Стандартное отклонение (np.std):\n",
+            "Результат: 7.04\n",
+            "\n",
+            "4. Дисперсия (np.var):\n",
+            "Результат: 49.56\n",
+            "\n",
+            "5. Минимальное и максимальное значения:\n",
+            "Минимум: 3\n",
+            "Максимум: 25\n",
+            "Диапазон: 22\n",
+            "\n",
+            "\n",
+            "6. Сумма всех элементов (np.sum):\n",
+            "Результат: 138\n",
+            "\n",
+            "7. Процентили:\n",
+            "25-й процентиль (Q1): 8.5\n",
+            "75-й процентиль (Q3): 19.5\n",
+            "\n"
+          ]
+        }
+      ]
+    }
+  ]
+}

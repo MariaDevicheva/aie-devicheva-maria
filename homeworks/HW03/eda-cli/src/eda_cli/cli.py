@@ -1,4 +1,3 @@
-# src/eda_cli/cli.py
 from __future__ import annotations
 
 from pathlib import Path
@@ -6,7 +5,6 @@ from typing import Optional
 
 import pandas as pd
 import typer
-
 
 from .core import (
     DatasetSummary,
@@ -39,7 +37,7 @@ def _load_csv(
         raise typer.BadParameter(f"Файл '{path}' не найден")
     try:
         return pd.read_csv(path, sep=sep, encoding=encoding)
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         raise typer.BadParameter(f"Не удалось прочитать CSV: {exc}") from exc
 
 
@@ -49,12 +47,6 @@ def overview(
     sep: str = typer.Option(",", help="Разделитель в CSV."),
     encoding: str = typer.Option("utf-8", help="Кодировка файла."),
 ) -> None:
-    """
-    Напечатать краткий обзор датасета:
-    - размеры;
-    - типы;
-    - простая табличка по колонкам.
-    """
     df = _load_csv(Path(path), sep=sep, encoding=encoding)
     summary: DatasetSummary = summarize_dataset(df)
     summary_df = flatten_summary_for_print(summary)
@@ -71,18 +63,9 @@ def report(
     out_dir: str = typer.Option("reports", help="Каталог для отчёта."),
     sep: str = typer.Option(",", help="Разделитель в CSV."),
     encoding: str = typer.Option("utf-8", help="Кодировка файла."),
-    max_hist_columns: int = typer.Option(
-        6, 
-        help="Максимум числовых колонок для гистограмм."
-    ),
-    top_k_categories: int = typer.Option(
-        10,
-        help="Количество top-значений для категориальных признаков."
-    ),
-    title: str = typer.Option(
-        "Отчет EDA",
-        help="Заголовок отчёта."
-    ),
+    max_hist_columns: int = typer.Option(6, help="Максимум числовых колонок для гистограмм."),
+    top_k_categories: int = typer.Option(10, help="Количество top-значений для категориальных признаков."),
+    title: str = typer.Option("Отчет EDA", help="Заголовок отчёта."),
     min_missing_share: float = typer.Option(
         0.3,
         min=0.0,
@@ -95,34 +78,27 @@ def report(
         max=1.0,
         help="Порог оценки качества для рекомендаций."
     ),
-    json_summary: bool = typer.Option(
-        False,
-        help="Сохранить компактную JSON-сводку по датасету."
-    ),
+    json_summary: bool = typer.Option(False, help="Сохранить компактную JSON-сводку по датасету."),
 ) -> None:
-    """
-    Сгенерировать полный EDA-отчёт с настройками:
-    
-    Примеры:
-      eda-cli report data.csv --title "Мой анализ" --top-k-categories 5
-      eda-cli report data.csv --max-hist-columns 3 --min-missing-share 0.2 --json-summary
-    """
     out_root = Path(out_dir)
     out_root.mkdir(parents=True, exist_ok=True)
 
     df = _load_csv(Path(path), sep=sep, encoding=encoding)
 
-    # 1. Обзор
     summary = summarize_dataset(df)
     summary_df = flatten_summary_for_print(summary)
     missing_df = missing_table(df)
     corr_df = correlation_matrix(df)
     top_cats = top_categories(df, max_columns=5, top_k=top_k_categories)
 
-    # 2. Качество в целом
-    quality_flags = compute_quality_flags(summary, missing_df)
+    # 🔥 КЛЮЧЕВОЕ ИЗМЕНЕНИЕ: передаём df и min_missing_share
+    quality_flags = compute_quality_flags(
+        summary,
+        missing_df,
+        df=df,  # ← теперь передаём данные
+        min_missing_share=min_missing_share  # ← и порог
+    )
 
-    # 3. Сохраняем табличные артефакты
     summary_df.to_csv(out_root / "summary.csv", index=False)
     if not missing_df.empty:
         missing_df.to_csv(out_root / "missing.csv", index=True)
@@ -130,9 +106,7 @@ def report(
         corr_df.to_csv(out_root / "correlation.csv", index=True)
     save_top_categories_tables(top_cats, out_root / "top_categories")
 
-    # 4. Генерируем JSON-сводку если запрошено
     if json_summary:
-        # Собираем параметры CLI
         cli_params = {
             "max_hist_columns": max_hist_columns,
             "top_k_categories": top_k_categories,
@@ -143,8 +117,6 @@ def report(
             "sep": sep,
             "encoding": encoding
         }
-        
-        # Генерируем JSON данные
         json_data = generate_json_summary(
             summary=summary,
             missing_df=missing_df,
@@ -153,35 +125,29 @@ def report(
             corr_matrix=corr_df,
             params=cli_params
         )
-        
-        # Сохраняем JSON файл
         json_path = save_json_summary(json_data, out_root / "summary.json")
         typer.echo(f"JSON-сводка сохранена: {json_path}")
 
-    # 5. Markdown-отчёт с учетом новых параметров
     md_path = out_root / "report.md"
     with md_path.open("w", encoding="utf-8") as f:
         f.write(f"# {title}\n\n")
         f.write(f"Исходный файл: `{Path(path).name}`\n")
         f.write(f"Сгенерировано: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
-        
-        # Параметры отчета
+
         f.write("## Параметры отчета\n")
         f.write(f"- Максимум гистограмм: `{max_hist_columns}`\n")
         f.write(f"- Top категорий: `{top_k_categories}`\n")
         f.write(f"- Порог пропусков: `{min_missing_share:.0%}`\n")
         f.write(f"- Порог качества: `{quality_threshold:.0%}`\n")
         f.write(f"- JSON-сводка: `{'Да' if json_summary else 'Нет'}`\n\n")
-        
+
         f.write(f"Строк: **{summary.n_rows}**, столбцов: **{summary.n_cols}**\n\n")
 
-        # Полный отчет о качестве с новыми эвристиками
         f.write("## Качество данных\n\n")
         quality_report = get_quality_report(quality_flags)
         f.write(quality_report)
         f.write("\n\n")
-        
-        # Проблемные колонки по пропускам (с использованием min_missing_share)
+
         f.write(f"### Колонки с пропусками >{min_missing_share:.0%}\n\n")
         problematic_cols = missing_df[missing_df["missing_share"] > min_missing_share]
         if not problematic_cols.empty:
@@ -192,30 +158,25 @@ def report(
         else:
             f.write(f"Нет колонок с пропусками более {min_missing_share:.0%}.\n")
         f.write("\n")
-        
-        # Новые эвристики в отдельном разделе
+
         f.write("### Детальный анализ проблем\n\n")
-        
-        # Константные колонки
+
         if quality_flags.get("has_constant_columns", False):
             f.write("**Константные колонки:**\n")
             for col in quality_flags.get("constant_columns", []):
                 f.write(f"- `{col}` - только одно значение\n")
             f.write("\n")
-        
-        # Высокая кардинальность
+
         if quality_flags.get("has_high_cardinality_categoricals", False):
             f.write("**Колонки с высокой кардинальностью:**\n")
             for col_info in quality_flags.get("high_cardinality_columns", []):
                 f.write(f"- `{col_info['name']}`: {col_info['unique']} уникальных значений ")
                 f.write(f"({col_info['unique_ratio']:.1%} от всех строк)\n")
             f.write("\n")
-        
-        # Проблемы с ID
+
         if quality_flags.get("suspicious_id_duplicates", False):
             f.write("**Внимание:** Возможные дубликаты в ID-колонке\n\n")
-        
-        # Нулевые значения
+
         if quality_flags.get("has_many_zero_values", False):
             f.write("**Колонки с нулевыми значениями:**\n")
             for col in quality_flags.get("many_zero_columns", []):
@@ -251,8 +212,6 @@ def report(
         if numeric_cols:
             f.write(f"**Всего числовых колонок:** {len(numeric_cols)}\n")
             f.write(f"**Гистограммы созданы для:** {min(max_hist_columns, len(numeric_cols))} колонок\n\n")
-            
-            # Статистики для числовых колонок
             f.write("### Основные статистики\n")
             f.write("| Колонка | Min | Max | Mean | Std | Пропуски |\n")
             f.write("|---------|-----|-----|------|-----|----------|\n")
@@ -262,7 +221,6 @@ def report(
                     f.write(f"| {col.name} | {col.min or '—'} | {col.max or '—'} | ")
                     f.write(f"{col.mean or '—'} | {col.std or '—'} | {missing_pct} |\n")
             f.write("\n")
-            
             f.write("### Гистограммы\n")
             f.write("См. файлы `hist_*.png`.\n\n")
 
@@ -271,8 +229,6 @@ def report(
             f.write("Недостаточно числовых колонок для корреляции.\n\n")
         else:
             f.write("См. `correlation.csv` и `correlation_heatmap.png`.\n\n")
-            
-            # Сильные корреляции
             strong_corrs = []
             for i in range(len(corr_df.columns)):
                 for j in range(i + 1, len(corr_df.columns)):
@@ -281,56 +237,47 @@ def report(
                         col1 = corr_df.columns[i]
                         col2 = corr_df.columns[j]
                         strong_corrs.append((col1, col2, corr))
-            
             if strong_corrs:
                 f.write("### Сильные корреляции (|r| > 0.7)\n")
                 f.write("| Колонка 1 | Колонка 2 | Коэффициент |\n")
                 f.write("|-----------|-----------|-------------|\n")
-                for col1, col2, corr in strong_corrs[:5]:  # Ограничим 5
+                for col1, col2, corr in strong_corrs[:5]:
                     f.write(f"| {col1} | {col2} | {corr:.3f} |\n")
                 f.write("\n")
 
-        # Заключение
         f.write("## Заключение\n\n")
         f.write(f"**Общая оценка качества:** {quality_flags['quality_score']:.3f} ")
         f.write(f"({quality_flags['quality_category']})\n\n")
-        
+
         if quality_flags['quality_score'] >= quality_threshold:
             f.write("**Качество данных удовлетворительное** для анализа.\n")
         else:
             f.write("**Качество данных требует внимания** перед анализом.\n")
-        
-        # Рекомендации
+
         f.write("\n### Рекомендации\n")
         recommendations = []
-        
+
         if quality_flags.get("has_constant_columns", False):
             recommendations.append("Удалить константные колонки")
-        
         if quality_flags.get("has_very_high_missing_cols", False):
             recommendations.append("Проверить колонки с >90% пропусков")
-        
         if problematic_cols.shape[0] > 0:
             recommendations.append(f"Обработать пропуски в {problematic_cols.shape[0]} колонках")
-        
         if quality_flags.get("suspicious_id_duplicates", False):
             recommendations.append("Проверить уникальность ID")
-        
         if quality_flags.get("has_high_cardinality_categoricals", False):
             recommendations.append("Рассмотреть преобразование колонок с высокой кардинальностью")
-        
+
         if recommendations:
             for i, rec in enumerate(recommendations, 1):
                 f.write(f"{i}. {rec}\n")
         else:
             f.write("Данные готовы для дальнейшего анализа.\n")
 
-    # 6. Картинки с учетом max_hist_columns
     plot_histograms_per_column(df, out_root, max_columns=max_hist_columns)
     plot_missing_matrix(df, out_root / "missing_matrix.png")
     plot_correlation_heatmap(df, out_root / "correlation_heatmap.png")
 
-    # Вывод информации
     typer.echo(f"Отчёт сгенерирован в каталоге: {out_root}")
     typer.echo(f"   Заголовок: '{title}'")
     typer.echo(f"   Настройки:")
@@ -339,14 +286,14 @@ def report(
     typer.echo(f"     - Порог пропусков: {min_missing_share:.0%}")
     typer.echo(f"     - Порог качества: {quality_threshold:.0%}")
     typer.echo(f"     - JSON-сводка: {'Да' if json_summary else 'Нет'}")
-    
+
     if json_summary:
         typer.echo(f"\nJSON-сводка содержит:")
         typer.echo(f"   - Размеры датасета: {summary.n_rows} строк, {summary.n_cols} колонок")
         typer.echo(f"   - Оценку качества: {quality_flags['quality_score']:.3f}")
         typer.echo(f"   - Список проблемных колонок")
         typer.echo(f"   - Параметры генерации отчёта")
-    
+
     typer.echo(f"\nОсновные файлы:")
     typer.echo(f"   - {md_path}")
     if json_summary:

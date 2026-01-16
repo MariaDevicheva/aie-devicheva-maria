@@ -1,0 +1,23 @@
+{
+    "dataset_01": {
+        "method": "KMeans",
+        "silhouette": 0.5216395622404242,
+        "davies_bouldin": 0.6853295219054457,
+        "calinski_harabasz": 11786.954622671532,
+        "noise_ratio": 0.0
+    },
+    "dataset_02": {
+        "method": "KMeans",
+        "silhouette": 0.5216395622404242,
+        "davies_bouldin": 0.6853295219054457,
+        "calinski_harabasz": 11786.954622671532,
+        "noise_ratio": 0.0
+    },
+    "dataset_03": {
+        "method": "DBSCAN",
+        "silhouette": 0.14204251708734708,
+        "davies_bouldin": 1.3950553664183074,
+        "calinski_harabasz": 1641.8933585397035,
+        "noise_ratio": 0.029333333333333333
+    }
+}

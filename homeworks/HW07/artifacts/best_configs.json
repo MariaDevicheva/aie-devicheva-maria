@@ -1,0 +1,26 @@
+{
+    "dataset_01": {
+        "algorithm": "KMeans",
+        "params": {
+            "n_clusters": 2,
+            "random_state": 42
+        },
+        "selection_criterion": "highest silhouette and simplicity"
+    },
+    "dataset_02": {
+        "algorithm": "KMeans",
+        "params": {
+            "n_clusters": 2,
+            "random_state": 42
+        },
+        "selection_criterion": "same quality as DBSCAN but simpler"
+    },
+    "dataset_03": {
+        "algorithm": "DBSCAN",
+        "params": {
+            "eps": 0.5,
+            "min_samples": 8
+        },
+        "selection_criterion": "superior silhouette due to varying cluster density"
+    }
+}

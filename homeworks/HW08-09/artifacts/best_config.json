@@ -1,0 +1,40 @@
+{
+    "model_name": "MLP",
+    "input_shape": [
+        1,
+        28,
+        28
+    ],
+    "num_classes": 47,
+    "hidden_sizes": [
+        256,
+        128
+    ],
+    "activation": "relu",
+    "dropout": 0.3,
+    "use_batchnorm": false,
+    "dataset": "EMNIST_BALANCED",
+    "dataset_size": {
+        "train": 9600,
+        "val": 2400,
+        "test": 3000
+    },
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "batch_size": 128,
+    "weight_decay": 0.0,
+    "momentum": null,
+    "early_stopping": {
+        "patience": 5,
+        "min_delta": 0.001
+    },
+    "best_epoch": 19,
+    "best_val_accuracy": 0.7508333333333334,
+    "best_val_loss": 0.8102878340085348,
+    "total_epochs_trained": 24,
+    "seed": 42,
+    "device": "cpu",
+    "fast_mode": true,
+    "training_date": "2026-03-11 13:58:16",
+    "experiment_id": "E4"
+}

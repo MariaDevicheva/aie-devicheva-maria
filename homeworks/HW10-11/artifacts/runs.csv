@@ -1,0 +1,7 @@
+experiment_id,task,dataset,seed,model_summary,optimizer,lr,epochs_trained,best_val_accuracy,test_accuracy,precision,recall,mean_iou,notes
+C1,classification,STL10,42,"Simple CNN, без аугментаций",Adam,0.001,15.0,0.631,0.63625,,,,"Simple CNN, без аугментаций"
+C2,classification,STL10,42,"Simple CNN, с аугментациями",Adam,0.001,15.0,0.63,0.6465,,,,"Simple CNN, с аугментациями"
+C3,classification,STL10,42,"ResNet18, только голова обучается",Adam,0.001,10.0,0.945,0.9425,,,,"ResNet18, только голова обучается"
+C4,classification,STL10,42,"ResNet18, fine-tune layer4 + fc",Adam,0.001,10.0,0.952,0.955625,,,,"ResNet18, fine-tune layer4 + fc"
+V1,segmentation,OxfordIIITPet,42,"Базовая постобработка (class 8, threshold=0.5)",N/A (inference only),,,,,0.6935950541903972,0.8933097361494167,0.6902981251478195,"Post-processing: Базовая постобработка (class 8, threshold=0.5), class_used: 8, samples: 20"
+V2,segmentation,OxfordIIITPet,42,"Альтернативная постобработка (class 8, удаление маленьких компонент)",N/A (inference only),,,,,0.6935950541903972,0.8933097361494167,0.6902981251478195,"Post-processing: Альтернативная постобработка (class 8, удаление маленьких компонент), class_used: 8, samples: 20"

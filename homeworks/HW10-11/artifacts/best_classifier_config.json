@@ -1,0 +1,14 @@
+{
+    "experiment_id": "C4",
+    "model_type": "ResNet18",
+    "num_classes": 10,
+    "dataset": "STL10",
+    "best_val_accuracy": 0.952,
+    "test_accuracy": 0.955625,
+    "description": "ResNet18, fine-tune layer4 + fc",
+    "seed": 42,
+    "epochs_trained": 10,
+    "learning_rate": 0.001,
+    "augmentation_used": true,
+    "finetune_used": true
+}

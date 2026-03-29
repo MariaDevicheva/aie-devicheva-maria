@@ -1,3 +1,7 @@
-* text=auto
+*.ipynb text eol=lf
+*.json text eol=lf
+
 *.sh text eol=lf
 *.bat text eol=crlf
+
+* text=auto

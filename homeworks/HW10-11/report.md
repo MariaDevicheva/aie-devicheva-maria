@@ -178,10 +178,8 @@ std=(0.2603, 0.2566, 0.2713))
 - Сравнение C1-C4: `aie-devicheva-maria/homeworks/HW10-11/artifacts/figures/classification_compare.png`
 - Визуализация аугментаций: `aie-devicheva-maria/homeworks/HW10-11/artifacts/figures/augmentations_preview.png`
 - Визуализации второй части:
-  
-      * Примеры сегментации : `aie-devicheva-maria/homeworks/HW10-11/artifacts/figures/segmentation_examples.png`
-  
-      * Метрики сегментации : `aie-devicheva-maria/homeworks/HW10-11/artifacts/figures/segmentation_metrics.png`
+  - Примеры сегментации : `aie-devicheva-maria/homeworks/HW10-11/artifacts/figures/segmentation_examples.png`
+  - Метрики сегментации : `aie-devicheva-maria/homeworks/HW10-11/artifacts/figures/segmentation_metrics.png`
 
 ## Короткая сводка (6-10 строк)
 - **Лучший эксперимент части A:** C4 (ResNet18 fine-tune, layer4 + fc)

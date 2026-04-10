@@ -1,0 +1,4 @@
+metric,value
+mean_hit@3,1.0
+mean_recall@3,1.0
+mean_MRR@3,0.95

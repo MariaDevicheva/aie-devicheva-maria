@@ -1,0 +1,18 @@
+api:
+  host: "0.0.0.0"
+  port: 8000
+  debug: false
+
+model:
+  path: "artifacts/model.pkl"
+  version: "1.0.0"
+  threshold: 0.05
+
+monitoring:
+  log_level: "INFO"
+  metrics_enabled: true
+
+data:
+  sample_path: "data/sample_data.csv"
+  test_size: 0.2
+  random_state: 42
